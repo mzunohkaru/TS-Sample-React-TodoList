@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import "./NewTodo.css";
 
 type NewTodoProps = {
-  onAddTodo: (text: string) => void;
+  onAddTodo: (task: string) => void;
 };
 
 const NewTodo: React.FC<NewTodoProps> = (props) => {

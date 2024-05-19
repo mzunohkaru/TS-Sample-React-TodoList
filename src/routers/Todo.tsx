@@ -7,15 +7,36 @@ import { TodoModel } from "../todo.model";
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoModel[]>([]);
 
-  const todoAddHandler = (text: string) => {
+  const todoAddHandler = (task: string) => {
     const newTodo = {
       id: Math.random().toString(),
-      text: text,
+      task: task,
+      completed: false,
     };
     setTodos((prevTodos) => {
       return [...prevTodos, newTodo];
     });
     console.log(newTodo.id);
+  };
+  
+  const todoEditHandler = (todoId: string, task: React.ChangeEvent<HTMLInputElement>) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === todoId) {
+        todo.task = task.target.value;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
+  const todoCheckHandler = (todoId: string) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === todoId) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
   };
 
   const todoDeleteHandler = (todoId: string) => {
@@ -28,7 +49,12 @@ const Todo: React.FC = () => {
     <div className="App">
       <header className="App-header">
         <NewTodo onAddTodo={todoAddHandler} />
-        <TodoList items={todos} onDeleteTodo={todoDeleteHandler} />
+        <TodoList
+          items={todos}
+          onCheckTodo={todoCheckHandler}
+          onEditTodo={todoEditHandler}
+          onDeleteTodo={todoDeleteHandler}
+        />
       </header>
     </div>
   );

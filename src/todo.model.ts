@@ -1,4 +1,5 @@
 export type TodoModel = {
   id: string;
-  text: string;
+  task: string;
+  completed: boolean;
 };
